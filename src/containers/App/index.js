@@ -12,6 +12,7 @@ import BookList from '../../components/BookList';
 import AppTitle from '../../components/AppTitle';
 import FeaturedBook from '../../components/FeaturedBook';
 import NewBookForm from '../NewBookForm';
+import ListFilter from '../ListFilter';
 
 class App extends Component {
   constructor(props) {
@@ -19,9 +20,15 @@ class App extends Component {
 
     this.state = {
       title: '',
-      books: []
+      books: [],
+      filter: ''
     }
     this.addNewBook = this.addNewBook.bind(this);
+    this.setFilter = this.setFilter.bind(this);
+  }
+
+  setFilter(filter) {
+    this.setState({ filter });
   }
 
   addNewBook(book) {
@@ -57,7 +64,9 @@ class App extends Component {
           : null
         }
         <NewBookForm submitHandler={this.addNewBook}/>
-        <BookList books={this.state.books}/>
+        <ListFilter setFilter={this.setFilter}/>
+        <h3>{this.state.filter}</h3>
+        <BookList books={this.state.books} filter={this.state.filter}/>
       </div>
     );
   }

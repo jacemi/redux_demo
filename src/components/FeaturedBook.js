@@ -1,6 +1,5 @@
 import React from 'react';
 import BookListItem from './BookListItem';
-import BookList from './BookList';
 
 const FeaturedBook = ({ book }) => {
   
