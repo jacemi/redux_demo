@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import logo from '../../logo.svg';
 import './App.css';
 
+
 import {
-  getBooksFromFakeXHR as getBooks
+  getBooksFromFakeXHR as getBooks,
+  addBookToFakeXHR as addBook
 } from '../../lib/books.db';
 import BookList from '../../components/BookList';
 
 import AppTitle from '../../components/AppTitle';
 import FeaturedBook from '../../components/FeaturedBook';
+import NewBookForm from '../NewBookForm';
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +21,18 @@ class App extends Component {
       title: '',
       books: []
     }
+    this.addNewBook = this.addNewBook.bind(this);
   }
+
+  addNewBook(book) {
+    return addBook(book)
+    .then(books => {
+      return this.setState({
+        books: [...books]
+      })
+    })
+  }
+
   componentDidMount() {
     this.setState({ title: 'My Books List'});
     getBooks()
@@ -42,6 +56,7 @@ class App extends Component {
           ?  <FeaturedBook book={this.state.books[2]}/>
           : null
         }
+        <NewBookForm submitHandler={this.addNewBook}/>
         <BookList books={this.state.books}/>
       </div>
     );
